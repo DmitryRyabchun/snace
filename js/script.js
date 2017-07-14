@@ -12,12 +12,12 @@ $(document).ready(function () {
 
     //Создание змейки
     function createSnake() {
-        $('#block_' + snake_x[2] + '_' + snake_y[2]).css('background', 'orange');
-        $('#block_' + snake_x[1] + '_' + snake_y[1]).css('background', 'orange');
-        $('#block_' + snake_x[0] + '_' + snake_y[0]).css('background', 'orange');
+        for (var i = 0; i < 3; i++) {
+            $('#block_' + snake_x[i] + '_' + snake_y[i]).css('background', 'orange');
+        }
     }
 
-    //указываем направление движеия змейки
+    //указываем направление движения змейки
     function route(lastTouch) {
         switch (lastTouch) {
             case 37:
@@ -31,6 +31,41 @@ $(document).ready(function () {
         }
     }
 
+    //начинает новую игру, если змейка пересекает сама себя
+    function Intersection() {
+        for (var ind = length - 5; ind >= 0; ind--) {
+            if (snake_x[length - 1] === snake_x[ind] && snake_y[length - 1] === snake_y[ind]) {
+                $('.field').empty();
+                createField(width, height);
+                length = 3,
+                    snake_x = [0, 1, 2],
+                    snake_y = [0, 0, 0],
+                    lastTouch = 40,
+                    counter = 0;
+                $('#counter').html('<span>' + counter + '</span>');
+                createSnake();
+                coordinatesApple = randomApple();
+            }
+        }
+    }
+
+    //Если змейка выходит за край поля, то появляется на противоположном
+    function Overstepping() {
+        if (snake_x[length - 1] === width) {
+            snake_x[length - 1] = 0;
+            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', 'orange');
+        } else if (snake_y[length - 1] === height) {
+            snake_y[length - 1] = 0;
+            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', 'orange');
+        } else if (snake_x[length - 1] === -1) {
+            snake_x[length - 1] = width-1;
+            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', 'orange');
+        } else if (snake_y[length - 1] === -1) {
+            snake_y[length - 1] = height-1;
+            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', 'orange');
+        }
+    }
+
     //змейка перемещается на клетку
     function snakeStep() {
         $('#block_' + snake_x[0] + '_' + snake_y[0]).css('background', 'chartreuse');
@@ -39,8 +74,10 @@ $(document).ready(function () {
             snake_y[k] = snake_y[k + 1];
         }
         route(lastTouch);
+        Intersection();
         $('#block_' + snake_x[0] + '_' + snake_y[0]).css('background', 'orange');
         $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', 'orange');
+        Overstepping();
         eatApple(coordinatesApple[0], coordinatesApple[1]);
     }
 
@@ -54,9 +91,9 @@ $(document).ready(function () {
     //Помещает "яблоко" на случайную клетку
     function randomApple() {
         var indication = true;
-        while (indication === true) {
-            var i = randomInteger(0, 15),
-                j = randomInteger(0, 15),
+        while (indication) {
+            var i = randomInteger(0, width-1),
+                j = randomInteger(0, height-1),
                 intersection = false;
             for (var l = 0; l < length; l++) {
                 if (snake_x[l] === i && snake_y[l] === j) {
@@ -77,7 +114,7 @@ $(document).ready(function () {
         if (i === snake_x[length - 1] && j === snake_y[length - 1]) {
             length++;
             counter++;
-            $('#counter').html('<span>'+counter+'</span>');
+            $('#counter').html('<span>' + counter + '</span>');
             for (var k = length - 1; k >= 0; k--) {
                 snake_x[k] = snake_x[k - 1];
                 snake_y[k] = snake_y[k - 1];
@@ -98,53 +135,40 @@ $(document).ready(function () {
             coordinatesApple = randomApple();
         }
     }
-    
-    function step() {
-        intervalId = setInterval(snakeStep,300);
-        $('html').keydown(function (eventObject) { //отлавливаем нажатие клавиш
-        if (event.keyCode == 38 && lastTouch != 40) {
-            lastTouch = 38;
-            clearInterval(intervalId);
-            intervalId = setInterval(snakeStep,300);
-        } else if (event.keyCode == 40 && lastTouch != 38) {
-            lastTouch = 40;
-            clearInterval(intervalId);
-            intervalId = setInterval(snakeStep,300);
-        } else if (event.keyCode == 37 && lastTouch != 39) {
-            lastTouch = 37;
-            clearInterval(intervalId);
-            intervalId = setInterval(snakeStep,300);
-        } else if (event.keyCode == 39 && lastTouch != 37) {
-            lastTouch = 39;
-            clearInterval(intervalId);
-            intervalId = setInterval(snakeStep,300);
-        }
-        if (snake_x[length - 1] === 16) {
-            snake_x[length - 1] = 0;
-            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', 'orange');
-        } else if (snake_y[length - 1] === 16) {
-            snake_y[length - 1] = 0;
-            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', 'orange');
-        } else if (snake_x[length - 1] === -1) {
-            snake_x[length - 1] = 15;
-            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', 'orange');
-        } else if (snake_y[length - 1] === -1) {
-            snake_y[length - 1] = 15;
-            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', 'orange');
-        }
-    });
-    } 
 
-    createField(16, 16); //создаем поле 16х16
-    var length = 3;
-    snake_x = [0, 1, 2],
+    //отлавливаем нажатие клавиш
+    function keyDown() {
+        intervalId = setInterval(snakeStep, speed);
+        $('html').keydown(function (eventObject) {
+            if (event.keyCode == 38 && lastTouch != 40) {
+                lastTouch = 38;
+                clearInterval(intervalId);
+                intervalId = setInterval(snakeStep, speed);
+            } else if (event.keyCode == 40 && lastTouch != 38) {
+                lastTouch = 40;
+                clearInterval(intervalId);
+                intervalId = setInterval(snakeStep, speed);
+            } else if (event.keyCode == 37 && lastTouch != 39) {
+                lastTouch = 37;
+                clearInterval(intervalId);
+                intervalId = setInterval(snakeStep, speed);
+            } else if (event.keyCode == 39 && lastTouch != 37) {
+                lastTouch = 39;
+                clearInterval(intervalId);
+                intervalId = setInterval(snakeStep, speed);
+            }
+        });
+    }
+
+    var width = 30, height = 30, speed = 100;
+    createField(width, height); //создаем поле 16х16
+    var length = 3,
+        snake_x = [0, 1, 2],
         snake_y = [0, 0, 0],
         lastTouch = 40,
         counter = 0;
     createSnake();
     var coordinatesApple = randomApple();
-    step();
+    keyDown();
     eatApple(coordinatesApple[0], coordinatesApple[1]);
-
-
 });

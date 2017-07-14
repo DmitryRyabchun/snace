@@ -12,35 +12,13 @@
     display: inline-block;
 }
 
-#reset {
-    width: 150px;
-    margin: 20px auto;
-    display: block;
-    padding: 6px;
-    background-color: #66A3D2;
-    border: 1px solid #3F92D2;
-    border-radius: 2px;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-#reset:hover,
-#submit:hover {
-    background-color: #3F92D2;
-}
-
-#reset:active,
-#submit:active {
-    background-color: #1144AA;
-}
-
 .field-line {
     clear: both;
 }
 
 .field-line>div {
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
     background-color: chartreuse;
     margin: 0 1px 1px 0;
     float: left;
@@ -50,48 +28,6 @@
     background-color: blue;
 }
 
-.setting-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    vertical-align: middle;
-    background-color: rgba(255, 255, 255, 0.9);
-    height: 0;
-    overflow: hidden;
-}
 
-.setting-window {
-    margin: 15% auto 0;
-    height: 150px;
-    width: 300px;
-    border: 2px solid black;
-    border-radius: 4px;
-    font-size: 18px;
-    background-color: aliceblue;
-}
 
-.size {
-    width: 35px;
-}
 
-.box-input {
-    width: 90%;
-    text-align: center;
-    margin: 0 auto;
-    padding: 38px 0;
-    border-bottom: 2px solid black;
-}
-
-#submit {
-    width: 100px;
-    height: 30px;
-    margin: 10px 15px 10px 0;
-    float: right;
-    font-size: 14px;
-    font-weight: bold;
-    background-color: #66A3D2;
-    border: 1px solid #3F92D2;
-    border-radius: 2px;
-}
