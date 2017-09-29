@@ -13,7 +13,7 @@ $(document).ready(function () {
     //Создание змейки
     function createSnake() {
         for (var i = 0; i < 3; i++) {
-            $('#block_' + snake_x[i] + '_' + snake_y[i]).css('background', 'orange');
+            $('#block_' + snake_x[i] + '_' + snake_y[i]).css('background', color_snace);
         }
     }
 
@@ -31,12 +31,27 @@ $(document).ready(function () {
         }
     }
 
+//    function stat() {
+//        console.log(last_game);
+//                console.log(counter);
+//                if(counter> last_game) {
+//                    $('.best_game').html('<span>' + counter + '</span>');
+//                }
+//                console.log(last_game);
+//                console.log(counter);
+//        if(counter !== 0) {
+//             $('.last_game').html('<span>' + last_game + '</span>');
+//            last_game = counter;
+//        }
+//    }
+    
     //начинает новую игру, если змейка пересекает сама себя
     function Intersection() {
         for (var ind = length - 5; ind >= 0; ind--) {
             if (snake_x[length - 1] === snake_x[ind] && snake_y[length - 1] === snake_y[ind]) {
                 $('.field').empty();
                 createField(width, height);
+//                stat();
                 length = 3,
                     snake_x = [0, 1, 2],
                     snake_y = [0, 0, 0],
@@ -53,30 +68,30 @@ $(document).ready(function () {
     function Overstepping() {
         if (snake_x[length - 1] === width) {
             snake_x[length - 1] = 0;
-            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', 'orange');
+            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', color_snace);
         } else if (snake_y[length - 1] === height) {
             snake_y[length - 1] = 0;
-            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', 'orange');
+            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', color_snace);
         } else if (snake_x[length - 1] === -1) {
             snake_x[length - 1] = width-1;
-            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', 'orange');
+            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', color_snace);
         } else if (snake_y[length - 1] === -1) {
             snake_y[length - 1] = height-1;
-            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', 'orange');
+            $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', color_snace);
         }
     }
 
     //змейка перемещается на клетку
     function snakeStep() {
-        $('#block_' + snake_x[0] + '_' + snake_y[0]).css('background', 'chartreuse');
+        $('#block_' + snake_x[0] + '_' + snake_y[0]).css('background', '#009999');
         for (var k = 0; k < length - 1; k++) {
             snake_x[k] = snake_x[k + 1];
             snake_y[k] = snake_y[k + 1];
         }
         route(lastTouch);
         Intersection();
-        $('#block_' + snake_x[0] + '_' + snake_y[0]).css('background', 'orange');
-        $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', 'orange');
+        $('#block_' + snake_x[0] + '_' + snake_y[0]).css('background', color_snace);
+        $('#block_' + snake_x[length - 1] + '_' + snake_y[length - 1]).css('background', color_snace);
         Overstepping();
         eatApple(coordinatesApple[0], coordinatesApple[1]);
     }
@@ -101,7 +116,7 @@ $(document).ready(function () {
                 }
             }
             if (intersection === false) {
-                $('#block_' + i + '_' + j).css('background-color', 'red');
+                $('#block_' + i + '_' + j).css('background-color', '#FF7373');
                 indication = false;
             }
 
@@ -166,7 +181,10 @@ $(document).ready(function () {
         snake_x = [0, 1, 2],
         snake_y = [0, 0, 0],
         lastTouch = 40,
-        counter = 0;
+        counter = 0,
+        best_game = 0,
+        last_game = 0,
+        color_snace = '#7AE969';
     createSnake();
     var coordinatesApple = randomApple();
     keyDown();
