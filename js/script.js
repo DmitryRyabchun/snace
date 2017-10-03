@@ -176,7 +176,7 @@ $(document).ready(function () {
     }
 
     var width = 30, height = 30, speed = 100;
-    createField(width, height); //создаем поле 16х16
+    createField(width, height); //создаем поле 30х30
     var length = 3,
         snake_x = [0, 1, 2],
         snake_y = [0, 0, 0],
