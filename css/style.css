@@ -1,3 +1,7 @@
+body {
+    color: #003F3F;
+}
+
 .container {
     top: 0;
     left: 0;
@@ -9,39 +13,42 @@
     font-size: 20px;
 }
 
-
-/*
 .on_container {
-    width: 500px;
     margin: 0 auto;
 }
-*/
+
+.my-flex-block {
+    display: inline-flex;
+    margin: 0 auto;
+}
 
 .field {
     margin: 0;
     display: inline-block;
-/*    float: left*/
-    
 }
 
 .field-line {
     clear: both;
 }
 
-.field-line>div {
+.field-line > div {
     width: 17px;
     height: 17px;
     background-color: #009999;
     margin: 0 2px 2px 0;
     float: left;
+    border-radius: 2px;
 }
 
 .statistics {
-    float: right;
     font-size: 20px;
-    background-color: #d3e9f0;
-    padding: 35px;
+    background-color: #009797;
+    padding: 25px;
+    margin-left: 4px;
     height: 260px;
+    width: 180px;
+    border-radius: 4px;
+    display: inline-block;
 }
 
 .best_game {
@@ -49,5 +56,5 @@
 }
 
 body {
-    background-color: #5CCCCC;  
+    background-color: #5CCCCC;
 }
